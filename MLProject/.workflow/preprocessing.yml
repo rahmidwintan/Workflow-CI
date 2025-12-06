@@ -1,0 +1,34 @@
+name Run Preprocessing Automatically
+
+on
+  push
+    paths
+      - StudentsPerformance_rawStudentsPerformance.csv
+      - Preprocessingautomate_rahmidwintan.py
+
+jobs
+  preprocess
+    runs-on ubuntu-latest
+
+    steps
+      - name Checkout repository
+        uses actionscheckout@v3
+
+      - name Set up Python
+        uses actionssetup-python@v4
+        with
+          python-version 3.10.7
+
+      - name Install dependencies
+        run 
+          pip install pandas scikit-learn
+
+      - name Run preprocessing script
+        run 
+          python Preprocessingautomate_rahmidwintan.py
+
+      - name Upload processed dataset
+        uses actionsupload-artifact@v3
+        with
+          name dataset_preprocessed
+          pathPreprocessingStudentsPerformance_preprocessingdataset_preprocessed.csv
