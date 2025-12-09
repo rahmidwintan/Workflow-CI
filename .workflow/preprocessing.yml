@@ -3,7 +3,7 @@ name: Run Preprocessing Automatically
 on:
   push:
     paths:
-      - "StudentsPerformance_raw/StudentsPerformance.csv"
+      - "StudentsPerformance_preprocessing/dataset_preprocessed.csv"
       - "Preprocessing/automate_rahmidwintan.py"
 
 jobs:
