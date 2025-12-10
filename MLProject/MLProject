@@ -1,6 +1,10 @@
 name: StudentsPerformance_RF
 
-conda_env: conda.yaml
+environment:
+  python: python3
+  # tambahkan ini supaya MLflow pake virtualenv, bukan conda
+  env_manager: local
+
 
 entry_points:
   main:
@@ -15,4 +19,5 @@ entry_points:
       python modelling.py
       --test_size {test_size}
       --random_state {random_state}
+
 
