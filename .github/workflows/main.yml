@@ -22,7 +22,7 @@ jobs:
 
       - name: Run preprocessing script
         run: |
-          python MLProject/Preprocessing/automate_rahmidwintan.py
+          python Preprocessing/automate_rahmidwintan.py
 
       - name: Upload processed dataset
         uses: actions/upload-artifact@v4
