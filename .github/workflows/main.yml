@@ -28,7 +28,7 @@ jobs:
         run: python -m mlflow --version
 
       - name: Run MLflow Project 
-        run: python -m mlflow run MLProject 
+        run: python -m mlflow run MLProject --env-manager=local
 
       - name: Get latest MLflow run_id
         run: mlflow runs list | head -n 5
