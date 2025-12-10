@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r MLProject/requirements.txt
-          pip install mlflow
+          pip install mlflow==2.7.0
 
       # 5. Run MLflow project
       - name: Run MLflow Project
