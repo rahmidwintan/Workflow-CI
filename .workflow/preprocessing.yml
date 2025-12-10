@@ -39,7 +39,7 @@ jobs:
       - name: Check dataset
         run: |
           echo "Checking dataset..."
-          if [ ! -f "namadataset_raw/StudentsPerformance.csv" ]; then
+          if [ ! -f "MLProject/StudentsPerformance_preprocessing/dataset_preprocessed.csv" ]; then
             echo "Dataset StudentsPerformance.csv NOT FOUND!"
             exit 1
           fi
