@@ -1,0 +1,41 @@
+name: Run Preprocessing Automatically
+
+on: push
+
+jobs:
+  preprocess:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout Repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Setup Python
+      - name: Set up Python 3.10.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.7"
+
+      # 3. Check environment
+      - name: Check Python PATH
+        run: |
+          which python
+          python --version
+
+      # 4. Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install -r MLProject/requirements.txt
+          pip install mlflow
+
+      # 5. Run MLflow project
+      - name: Run MLflow Project
+        run: |
+          mlflow run MLProject
+
+      # 6. Get latest MLflow run_id
+      - name: Get latest run_id
+        run: |
+          echo "Latest MLflow run:"
+          mlflow runs list | head -n 5
