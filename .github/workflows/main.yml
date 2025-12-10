@@ -28,7 +28,7 @@ jobs:
         run: python -m mlflow --version
 
       - name: Run MLflow Project 
-        run: python -m mlflow run MLProject --env-manager=local
+        run: python -m mlflow run MLProject --env-manager=local -P input="MLProject/Preprocessing/StudentsPerformance_raw/StudentsPerformance.csv" -P target="math score"
 
       - name: Get latest MLflow run_id
         run: mlflow runs list | head -n 5
