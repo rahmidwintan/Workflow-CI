@@ -32,7 +32,7 @@ jobs:
       # 5. Run MLflow project
       - name: Run MLflow Project
         run: |
-          mlflow run MLProject
+          mlflow run MLPRoject
 
       # 6. Get latest MLflow run_id
       - name: Get latest run_id
