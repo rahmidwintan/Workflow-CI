@@ -6,8 +6,6 @@ import mlflow
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", required=True)
-    parser.add_argument("--target", required=True)
     parser.add_argument("--test_size", type=float, default=0.2)
     parser.add_argument("--random_state", type=int, default=42)
     args = parser.parse_args()
@@ -34,4 +32,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
