@@ -1,6 +1,7 @@
 name: StudentsPerformance_RF
 
-conda_env: conda.yaml
+environment:
+  python: python3
 
 entry_points:
   main:
