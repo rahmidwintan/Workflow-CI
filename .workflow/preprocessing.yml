@@ -1,34 +1,71 @@
-name: Run Preprocessing Automatically
+name: Retrain StudentsPerformance Model
 
 on:
   push:
-    paths:
-      - "StudentsPerformance_preprocessing/dataset_preprocessed.csv"
-      - "Preprocessing/automate_rahmidwintan.py"
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  preprocess:
+  retrain:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: "3.10.7"
+          environment-file: Workflow-CI/MLProject/conda.yaml
+          activate-environment: mlflow-env
+          auto-activate-base: false
 
-      - name: Install dependencies
+      - name: Verify Conda Environment
+        shell: bash -l {0}
         run: |
-          pip install pandas scikit-learn
+          conda info
+          conda list
+          echo "Conda environment ready"
 
-      - name: Run preprocessing script
+      - name: Ensure dataset exists
+        shell: bash -l {0}
         run: |
-          python Preprocessing/automate_rahmidwintan.py
+          echo "Checking dataset file..."
+          if [ ! -f "namadataset_raw/StudentsPerformance.csv" ]; then
+            echo "Dataset not found! Please place StudentsPerformance.csv in namadataset_raw/"
+            exit 1
+          fi
+          echo "Dataset found"
 
-      - name: Upload processed dataset
-        uses: actions/upload-artifact@v3
-        with:
-          name: dataset_preprocessed
-          path:Preprocessing/StudentsPerformance_preprocessing/dataset_preprocessed.csv
+      - name: Run preprocessing
+        shell: bash -l {0}
+        run: |
+          echo "Running preprocessing..."
+          python preprocessing/automate_rahmi.py \
+            --input namadataset_raw/StudentsPerformance.csv \
+            --output preprocessing/namadataset_preprocessing/dataset_preprocessed.csv
+          echo "Preprocessing completed"
+
+      - name: Install MLflow (if not in env)
+        shell: bash -l {0}
+        run: |
+          pip install --upgrade mlflow
+
+      - name: Run MLflow Project (Training)
+        shell: bash -l {0}
+        run: |
+          cd Workflow-CI/MLProject
+          echo "Running MLflow project..."
+          mlflow run . \
+            -P input="../preprocessing/StudentsPerformance_preprocessing/dataset_preprocessed.csv" \
+            -P target="math score"
+          echo "Model trained successfully"
+
+      - name: Show MLflow Run Summary
+        shell: bash -l {0}
+        run: |
+          echo "Listing MLflow runs..."
+          ls -R Workflow-CI/MLProject/mlruns || echo "No mlruns directory found!"
