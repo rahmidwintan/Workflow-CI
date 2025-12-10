@@ -40,4 +40,4 @@ jobs:
       - name: Get latest run_id
         run: |
           echo "Latest MLflow run:"
-          mlflow runs list --experiment-id 0 | head -n 5
+          mlflow runs list | head -n 5
