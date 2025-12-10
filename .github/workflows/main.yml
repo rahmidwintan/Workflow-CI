@@ -27,8 +27,8 @@ jobs:
       - name: Check MLflow version
         run: python -m mlflow --version
 
-      - name: Run MLflow Project tanpa conda
-        run: python -m mlflow run MLProject --no-conda
+      - name: Run MLflow Project 
+        run: python -m mlflow run MLProject 
 
       - name: Get latest MLflow run_id
         run: mlflow runs list | head -n 5
