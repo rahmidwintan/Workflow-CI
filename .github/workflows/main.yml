@@ -26,8 +26,12 @@ jobs:
       # 4. Install dependencies
       - name: Install dependencies
         run: |
-          pip install -r MLProject/requirements.txt
+          python -m pip install --upgrade pip
           pip install mlflow==2.8.1
+          pip install -r MLProject/requirements.txt
+
+      - name: Check MLflow version
+        run: mlflow --version
 
       # 5. Run MLflow project
       - name: Run MLflow Project
