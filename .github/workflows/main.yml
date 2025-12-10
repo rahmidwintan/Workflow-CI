@@ -32,7 +32,7 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
-          pip install -r Workflow-CI/MLProject/requirements.txt
+          pip install -r MLProject/requirements.txt
           pip install mlflow
 
       # Ensure dataset exists
